@@ -20,6 +20,7 @@ module.exports = {
         }
 
         await connection('ongs').where('id', id).delete();
+        await connection('incidents').where('ong_id', id).delete();
 
         return response.status(204).send();
     }
