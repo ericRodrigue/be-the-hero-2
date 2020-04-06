@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 import './style.css';
 import hereoesImg from '../../assets/heroes.png'
 import logoImg from '../../assets/logo.svg';
+
+toast.configure();
 
 function LogonAdmin() {
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
     const history = useHistory();
     localStorage.setItem('adminLogin', '');
+
+    const notify = () => {
+        toast.success('Falha no login, tente novamente.', {className: 'toastify'});
+    }
 
     async function handleLogin(e) {
         e.preventDefault();
@@ -22,7 +30,7 @@ function LogonAdmin() {
 
             history.push('/administrator/profile');
         } catch (err) {
-            alert('Falha no login, tente novamente.');
+            notify();
         }
     }
 

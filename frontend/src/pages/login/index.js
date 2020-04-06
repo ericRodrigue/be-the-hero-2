@@ -1,15 +1,23 @@
 import React, {useState} from 'react';
 import {FiLogIn} from 'react-icons/fi';
 import {Link, useHistory} from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 import './style.css';
 import hereoesImg from '../../assets/heroes.png'
 import logoImg from '../../assets/logo.svg';
 
+toast.configure();
+
 function Logon(){
     const [id, setId] = useState('');
     const history = useHistory();
     localStorage.setItem('ongId', '');
+
+    const notify = () => {
+        toast.success('Falha no login, tente novamente.', {className: 'toastify'});
+    }
 
     async function handleLogin(e){
         e.preventDefault();
@@ -22,7 +30,7 @@ function Logon(){
 
             history.push('/profile');
         }catch(err){
-            alert('Falha no login, tente novamente.');
+            notify();
         }
     }
 

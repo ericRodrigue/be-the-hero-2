@@ -2,9 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {FiPower} from 'react-icons/fi';
 import {FiTrash2} from 'react-icons/fi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 import './style.css';
 import logoImg from '../../assets/logo.svg';
+
+toast.configure();
 
 function Profile(){
     const ongId = localStorage.getItem('ongId');
@@ -26,6 +30,10 @@ function Profile(){
         })
     }, [ongId]);
 
+    const notify = () => {
+        toast.success('Erro ao deletar o caso, tente novamente.', {className: 'toastify'});
+    }
+
     function handleLogout(){
         localStorage.clear();
 
@@ -42,7 +50,7 @@ function Profile(){
 
             setIncidents(incidents.filter(incident => incident.id !== id));
         }catch(err){
-            alert('Erro ao deletar o caso, tente novamente.');
+            notify();
         }
     }
 

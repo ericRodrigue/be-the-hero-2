@@ -81,3 +81,8 @@ form textarea{
 .back-link{
     opacity: 0.8;
 }
+
+.toastify{
+    color: #ffffff;
+    background-color: #e02041 !important;
+}

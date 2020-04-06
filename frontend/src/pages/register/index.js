@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {FiArrowLeft} from 'react-icons/fi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 import './style.css'
 import '../../global.css';
 import logoImg from '../../assets/logo.svg';
+
+toast.configure();
 
 function Register(){
     const [name, setName] = useState('');
@@ -15,6 +19,14 @@ function Register(){
 
     const history = useHistory();
 
+    const notify = () => {
+        toast.success('Erro no cadastro, tente novamente.', {className: 'toastify'});
+    }
+
+    const notifySuccess = (id) => {
+        toast.success(`Seu ID de acesso: ${id}`, {className: 'toastify', autoClose: false});
+    }
+
     async function hangleRegister(e){
         e.preventDefault();
 
@@ -22,10 +34,10 @@ function Register(){
 
         try{
             const response = await api.post('ongs', data);
-            alert(`Seu ID de acesso: ${response.data.id}`);
+            notifySuccess(response.data.id);
             history.push('/');
         } catch(err) {
-            alert('Erro no cadastro, tente novamente.');
+            notify();
         }
     }
 

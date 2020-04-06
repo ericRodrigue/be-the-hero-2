@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FiTrash2, FiPower } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 import './style.css';
 import logoImg from '../../assets/logo.svg';
+
+toast.configure();
 
 function ProfileAdmin() {
     const [ongs, setOngs] = useState([]);
@@ -20,6 +24,10 @@ function ProfileAdmin() {
         })
     });
 
+    const notify = () => {
+        toast.success('Erro ao deletar a ONG, tente novamente.', {className: 'toastify'});
+    }
+
     async function handleLogout(){
         localStorage.clear();
 
@@ -32,7 +40,7 @@ function ProfileAdmin() {
 
             setOngs(ongs.filter(ong => ong.id  !== id));
         }catch(err){
-            alert('Erro ao deletar a ONG, tente novamente.');
+            notify();
         }
     }
 
